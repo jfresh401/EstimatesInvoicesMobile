@@ -13,6 +13,7 @@
     <ContentPage.Resources>
         <conv:CurrencyConverter x:Key="CurrencyConverter" />
         <conv:StatusColorConverter x:Key="StatusColorConverter" />
+        <conv:EstimateToBoolConverter x:Key="EstimateToBoolConverter" />
     </ContentPage.Resources>
 
     <Grid Padding="16" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="12">
@@ -50,12 +51,6 @@
                                            Invoked="EditDocument_Invoked"
                                            CommandParameter="{Binding .}" />
 
-                                <SwipeItem Text="Convert"
-                                           BackgroundColor="#7C3AED"
-                                           IsVisible="{Binding Type, Converter={x:Static conv:DocumentTypeToEstimateVisibilityConverter.Instance}}"
-                                           Invoked="ConvertEstimate_Invoked"
-                                           CommandParameter="{Binding .}" />
-
                                 <SwipeItem Text="PDF"
                                            BackgroundColor="#14532D"
                                            Invoked="ExportPdf_Invoked"
@@ -73,16 +68,38 @@
                                 StrokeThickness="1"
                                 Padding="14"
                                 Margin="0,0,0,10">
-                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
-                                <Label Text="{Binding Number}" FontAttributes="Bold" FontSize="18" TextColor="#112033" />
-                                <Label Grid.Column="1"
-                                       Text="{Binding GrandTotal, Converter={StaticResource CurrencyConverter}}"
-                                       FontAttributes="Bold"
-                                       TextColor="#112033" />
-                                <Label Grid.Row="1" Text="{Binding Title}" TextColor="#112033" />
-                                <Label Grid.Row="2" Text="{Binding Customer.DisplayName}" TextColor="#667085" />
-                                <Label Grid.Row="3" Text="{Binding Status}" FontAttributes="Bold" TextColor="#112033" />
-                            </Grid>
+                            <VerticalStackLayout Spacing="8">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                                    <Label Text="{Binding Number}"
+                                           FontAttributes="Bold"
+                                           FontSize="18"
+                                           TextColor="#112033" />
+
+                                    <Label Grid.Column="1"
+                                           Text="{Binding GrandTotal, Converter={StaticResource CurrencyConverter}}"
+                                           FontAttributes="Bold"
+                                           TextColor="#112033" />
+
+                                    <Label Grid.Row="1"
+                                           Text="{Binding Title}"
+                                           TextColor="#112033" />
+
+                                    <Label Grid.Row="2"
+                                           Text="{Binding Customer.DisplayName}"
+                                           TextColor="#667085" />
+
+                                    <Label Grid.Row="3"
+                                           Text="{Binding Status}"
+                                           FontAttributes="Bold"
+                                           TextColor="#112033" />
+                                </Grid>
+
+                                <Button Text="Convert Estimate to Invoice"
+                                        IsVisible="{Binding Type, Converter={StaticResource EstimateToBoolConverter}}"
+                                        Clicked="ConvertEstimateButton_Clicked"
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="#7C3AED" />
+                            </VerticalStackLayout>
                         </Border>
                     </SwipeView>
                 </DataTemplate>

@@ -47,11 +47,7 @@ public partial class DocumentsPage : ContentPage
         }
     }
 
-    private async void ConvertEstimate_Invoked(object? sender, EventArgs e)
-    {
-        if (sender is SwipeItem item && item.CommandParameter is BusinessDocument document)
-            await _viewModel.ConvertToInvoiceCommand.ExecuteAsync(document);
-    }
+    
 
     private async void ExportPdf_Invoked(object? sender, EventArgs e)
     {
@@ -63,5 +59,11 @@ public partial class DocumentsPage : ContentPage
     {
         if (sender is SwipeItem item && item.CommandParameter is BusinessDocument document)
             await _viewModel.DeleteCommand.ExecuteAsync(document);
+    }
+
+    private async void ConvertEstimateButton_Clicked(object? sender, EventArgs e)
+    {
+        if (sender is Button button && button.CommandParameter is BusinessDocument document)
+            await _viewModel.ConvertToInvoiceCommand.ExecuteAsync(document);
     }
 }
