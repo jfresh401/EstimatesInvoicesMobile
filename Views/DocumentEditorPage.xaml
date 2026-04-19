@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FreshEstimate.Mobile.Views.DocumentEditorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:FreshEstimate.Mobile.ViewModels"
+    xmlns:models="clr-namespace:FreshEstimate.Mobile.Models"
+    xmlns:conv="clr-namespace:FreshEstimate.Mobile.Converters"
+    x:DataType="viewmodels:DocumentEditorViewModel"
+    Title="Document"
+    BackgroundColor="#F4F7FB">
+
+    <ContentPage.Resources>
+        <conv:CurrencyConverter x:Key="CurrencyConverter" />
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12" x:DataType="viewmodels:DocumentEditorViewModel">
+            <Label Text="{Binding PageTitle}"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#112033" />
+
+            <Picker Title="Type"
+                    ItemsSource="{Binding Types}"
+                    SelectedItem="{Binding WorkingDocument.Type}" />
+
+            <Entry Placeholder="Number"
+                   Text="{Binding WorkingDocument.Number}" />
+
+            <Entry Placeholder="Title"
+                   Text="{Binding WorkingDocument.Title}" />
+
+            <Picker Title="Customer"
+                    ItemsSource="{Binding Customers}"
+                    SelectedItem="{Binding SelectedCustomer}"
+                    ItemDisplayBinding="{Binding DisplayName}" />
+
+            <Picker Title="Status"
+                    ItemsSource="{Binding Statuses}"
+                    SelectedItem="{Binding WorkingDocument.Status}" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <VerticalStackLayout>
+                    <Label Text="Issue Date"
+                           FontAttributes="Bold"
+                           FontSize="12"
+                           TextColor="#112033" />
+                    <DatePicker Date="{Binding WorkingDocument.IssueDate}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="{Binding SecondaryDateLabel}"
+                           FontAttributes="Bold"
+                           FontSize="12"
+                           TextColor="#112033" />
+                    <DatePicker Date="{Binding SecondaryDate}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <Editor Placeholder="Notes"
+                    Text="{Binding WorkingDocument.Notes}"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="120" />
+
+            <Border BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Add Line Item"
+                           FontAttributes="Bold"
+                           FontSize="18"
+                           TextColor="#112033" />
+
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                        <Picker Title="Choose template"
+                                ItemsSource="{Binding Templates}"
+                                SelectedItem="{Binding SelectedTemplate}"
+                                ItemDisplayBinding="{Binding Name}" />
+                        <Button Grid.Column="1"
+                                Text="Add Template"
+                                Command="{Binding AddTemplateLineCommand}" />
+                        <Button Grid.Column="2"
+                                Text="Blank"
+                                Command="{Binding AddBlankLineCommand}"
+                                BackgroundColor="#667085" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Line Items"
+                           FontAttributes="Bold"
+                           FontSize="18"
+                           TextColor="#112033" />
+
+                    <CollectionView ItemsSource="{Binding Items}" SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:LineItem">
+                                <Border BackgroundColor="White"
+                                        Stroke="#E5E7EB"
+                                        StrokeThickness="1"
+                                        Padding="12"
+                                        Margin="0,0,0,10">
+                                    <VerticalStackLayout Spacing="8">
+                                        <Entry Placeholder="Description"
+                                               Text="{Binding Description}" />
+
+                                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                                            <Entry Placeholder="Qty"
+                                                   Text="{Binding Quantity}"
+                                                   Keyboard="Numeric" />
+                                            <Entry Grid.Column="1"
+                                                   Placeholder="Unit Price"
+                                                   Text="{Binding UnitPrice}"
+                                                   Keyboard="Numeric" />
+                                            <Entry Grid.Column="2"
+                                                   Placeholder="Tax %"
+                                                   Text="{Binding TaxRatePercent}"
+                                                   Keyboard="Numeric" />
+                                        </Grid>
+
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <Label Text="{Binding Total, Converter={StaticResource CurrencyConverter}}"
+                                                   FontAttributes="Bold"
+                                                   TextColor="#112033" />
+                                            <Button Grid.Column="1"
+                                                    Text="Remove"
+                                                    Clicked="RemoveLine_Clicked"
+                                                    BackgroundColor="#9B1C1C" />
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Label Text="{Binding GrandTotal, Converter={StaticResource CurrencyConverter}, StringFormat='Total: {0}'}"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="#112033" />
+                </VerticalStackLayout>
+            </Border>
+
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="Save" Command="{Binding SaveCommand}" />
+                <Button Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="#667085" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

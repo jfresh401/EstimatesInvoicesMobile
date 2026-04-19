@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FreshEstimate.Mobile.Views.CustomerEditorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:FreshEstimate.Mobile.ViewModels"
+    x:DataType="viewmodels:CustomerEditorViewModel"
+    Title="Customer"
+    BackgroundColor="#F4F7FB">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label Text="{Binding PageTitle}"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#112033" />
+
+            <Entry Placeholder="Customer / Business Name"
+                   Text="{Binding Customer.DisplayName}" />
+
+            <Entry Placeholder="Contact Name"
+                   Text="{Binding Customer.ContactName}" />
+
+            <Entry Placeholder="Email"
+                   Text="{Binding Customer.Email}"
+                   Keyboard="Email" />
+
+            <Entry Placeholder="Phone"
+                   Text="{Binding Customer.Phone}"
+                   Keyboard="Telephone" />
+
+            <Editor Placeholder="Billing Address"
+                    Text="{Binding Customer.BillingAddress}"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="90" />
+
+            <Editor Placeholder="Notes"
+                    Text="{Binding Customer.Notes}"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="120" />
+
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="Save" Command="{Binding SaveCommand}" />
+                <Button Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="#667085" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

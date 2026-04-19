@@ -1,0 +1,93 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net9.0-android</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>FreshEstimate.Mobile</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <ApplicationTitle>Fresh Estimate and Invoicing</ApplicationTitle>
+    <ApplicationId>com.freshlabs.estimateinvoicing</ApplicationId>
+    <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">35.0</SupportedOSPlatformVersion>
+    <TargetSdkVersion>34</TargetSdkVersion>
+    <AndroidPackageFormats>apk;aab</AndroidPackageFormats>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+    <PublishTrimmed>true</PublishTrimmed>
+    <Authors>FreshLabs Interactive</Authors>
+    <Company>FreshLabs Interactive</Company>
+    <Product>Fresh Estimates and Invoicing</Product>
+    <Copyright>FreshLabs Interactive ©2026</Copyright>
+    <PackageIcon>freshlogo.png</PackageIcon>
+    <FileVersion>1.0.1</FileVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <Version>1.0.1</Version>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+    <ApplicationTitle>Fresh Estimates and Invoicing</ApplicationTitle>
+    <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+    <AndroidPackageFormat>aab</AndroidPackageFormat>
+    <AndroidKeyStore>False</AndroidKeyStore>
+    <AndroidUseAapt2>True</AndroidUseAapt2>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+    <ApplicationTitle>Fresh Estimates and Invoicing</ApplicationTitle>
+    <ApplicationDisplayVersion>1.0.1</ApplicationDisplayVersion>
+    <AndroidPackageFormat>aab</AndroidPackageFormat>
+    <AndroidKeyStore>False</AndroidKeyStore>
+    <AndroidUseAapt2>True</AndroidUseAapt2>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MauiIcon Include="Resources\AppIcon\freshlogo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </MauiIcon>
+    <MauiImage Include="Resources\Images\*" />
+    <MauiFont Include="Resources\Fonts\*" />
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Remove="Resources\AppIcon\freshlogo.png" />
+    <None Remove="Resources\Splash\fresh-logo.png" />
+    <None Remove="Resources\Splash\splash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiSplashScreen Include="Resources\Splash\splash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Maui" Version="12.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="QuestPDF" Version="[2025.4.0]" />
+    <PackageReference Include="SkiaSharp" Version="2.88.9" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.111" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiXaml Update="Views\LineItemTemplatesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#112033" />
+    <None Update="Resources\Images\applogo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

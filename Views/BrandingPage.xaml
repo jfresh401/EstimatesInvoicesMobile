@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FreshEstimate.Mobile.Views.BrandingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:FreshEstimate.Mobile.ViewModels"
+    x:DataType="viewmodels:BrandingViewModel"
+    Title="Branding">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label Text="Business Branding"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#112033" />
+
+            <Entry Placeholder="Business Name" Text="{Binding Branding.BusinessName}" />
+            <Entry Placeholder="Business Email" Text="{Binding Branding.BusinessEmail}" />
+            <Entry Placeholder="Business Phone" Text="{Binding Branding.BusinessPhone}" />
+            <Entry Placeholder="Address Line 1" Text="{Binding Branding.AddressLine1}" />
+            <Entry Placeholder="Address Line 2" Text="{Binding Branding.AddressLine2}" />
+
+            <HorizontalStackLayout Spacing="8">
+                <Entry Placeholder="#112033"
+                       Text="{Binding Branding.AccentHex}"
+                       HorizontalOptions="Fill" />
+                <Border WidthRequest="48"
+                        HeightRequest="48"
+                        BackgroundColor="#112033"
+                        Stroke="#E5E7EB"
+                        StrokeThickness="1" />
+            </HorizontalStackLayout>
+
+            <Entry Placeholder="$"
+                   Text="{Binding Branding.CurrencySymbol}"
+                   WidthRequest="120" />
+
+            <Editor Placeholder="Payment / Terms"
+                    Text="{Binding Branding.PaymentInstructions}"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="120" />
+
+            <Border BackgroundColor="White"
+                    Stroke="#E5E7EB"
+                    StrokeThickness="1"
+                    Padding="14">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Logo" FontAttributes="Bold" />
+                    <Image Source="{Binding Branding.LogoFilePath}"
+                           HeightRequest="140"
+                           Aspect="AspectFit" />
+                    <HorizontalStackLayout Spacing="8">
+                        <Button Text="Upload Logo" Command="{Binding PickLogoCommand}" />
+                        <Button Text="Clear Logo"
+                                Command="{Binding ClearLogoCommand}"
+                                BackgroundColor="#667085" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Save Branding" Command="{Binding SaveCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

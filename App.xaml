@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="FreshEstimate.Mobile.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Application.Resources>
+        <Style TargetType="ContentPage">
+            <Setter Property="BackgroundColor" Value="#F4F7FB" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#112033" />
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="#112033" />
+            <Setter Property="PlaceholderColor" Value="#667085" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
+
+        <Style TargetType="Editor">
+            <Setter Property="TextColor" Value="#112033" />
+            <Setter Property="PlaceholderColor" Value="#667085" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
+
+        <Style TargetType="SearchBar">
+            <Setter Property="TextColor" Value="#112033" />
+            <Setter Property="PlaceholderColor" Value="#667085" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="#112033" />
+            <Setter Property="TitleColor" Value="#667085" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="BackgroundColor" Value="#1A3352" />
+        </Style>
+
+        <Style TargetType="Border">
+            <Setter Property="StrokeShape">
+                <Setter.Value>
+                    <RoundRectangle CornerRadius="12" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>

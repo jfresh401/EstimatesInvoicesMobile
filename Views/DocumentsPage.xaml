@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FreshEstimate.Mobile.Views.DocumentsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:FreshEstimate.Mobile.ViewModels"
+    xmlns:models="clr-namespace:FreshEstimate.Mobile.Models"
+    xmlns:conv="clr-namespace:FreshEstimate.Mobile.Converters"
+    x:DataType="viewmodels:DocumentsViewModel"
+    Title="Documents"
+    BackgroundColor="#F4F7FB">
+
+    <ContentPage.Resources>
+        <conv:CurrencyConverter x:Key="CurrencyConverter" />
+        <conv:StatusColorConverter x:Key="StatusColorConverter" />
+    </ContentPage.Resources>
+
+    <Grid Padding="16" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="12">
+        <SearchBar Placeholder="Search invoices and estimates"
+                   Text="{Binding SearchText}"
+                   BackgroundColor="White" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="8">
+            <Picker Title="Sort"
+                    ItemsSource="{Binding SortOptions}"
+                    SelectedItem="{Binding SelectedSort}"
+                    BackgroundColor="White" />
+            <Picker Grid.Column="1"
+                    Title="Filter"
+                    ItemsSource="{Binding FilterOptions}"
+                    SelectedItem="{Binding SelectedFilter}"
+                    BackgroundColor="White" />
+        </Grid>
+
+        <HorizontalStackLayout Grid.Row="2" Spacing="8">
+            <Button Text="New Estimate" Clicked="NewEstimate_Clicked" />
+            <Button Text="New Invoice" Clicked="NewInvoice_Clicked" />
+        </HorizontalStackLayout>
+
+        <CollectionView Grid.Row="3"
+                        ItemsSource="{Binding FilteredDocuments}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:BusinessDocument">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem Text="Edit"
+                                           BackgroundColor="#1A3352"
+                                           Invoked="EditDocument_Invoked"
+                                           CommandParameter="{Binding .}" />
+
+                                <SwipeItem Text="Convert"
+                                           BackgroundColor="#7C3AED"
+                                           IsVisible="{Binding Type, Converter={x:Static conv:DocumentTypeToEstimateVisibilityConverter.Instance}}"
+                                           Invoked="ConvertEstimate_Invoked"
+                                           CommandParameter="{Binding .}" />
+
+                                <SwipeItem Text="PDF"
+                                           BackgroundColor="#14532D"
+                                           Invoked="ExportPdf_Invoked"
+                                           CommandParameter="{Binding .}" />
+
+                                <SwipeItem Text="Delete"
+                                           BackgroundColor="#9B1C1C"
+                                           Invoked="DeleteDocument_Invoked"
+                                           CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Border BackgroundColor="{Binding Status, Converter={StaticResource StatusColorConverter}}"
+                                Stroke="#E5E7EB"
+                                StrokeThickness="1"
+                                Padding="14"
+                                Margin="0,0,0,10">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                                <Label Text="{Binding Number}" FontAttributes="Bold" FontSize="18" TextColor="#112033" />
+                                <Label Grid.Column="1"
+                                       Text="{Binding GrandTotal, Converter={StaticResource CurrencyConverter}}"
+                                       FontAttributes="Bold"
+                                       TextColor="#112033" />
+                                <Label Grid.Row="1" Text="{Binding Title}" TextColor="#112033" />
+                                <Label Grid.Row="2" Text="{Binding Customer.DisplayName}" TextColor="#667085" />
+                                <Label Grid.Row="3" Text="{Binding Status}" FontAttributes="Bold" TextColor="#112033" />
+                            </Grid>
+                        </Border>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

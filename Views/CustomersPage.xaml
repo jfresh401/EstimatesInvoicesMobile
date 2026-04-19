@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FreshEstimate.Mobile.Views.CustomersPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:FreshEstimate.Mobile.ViewModels"
+    xmlns:models="clr-namespace:FreshEstimate.Mobile.Models"
+    x:DataType="viewmodels:CustomersViewModel"
+    Title="Customers"
+    BackgroundColor="#F4F7FB">
+
+    <Grid Padding="16" RowDefinitions="Auto,Auto,*" RowSpacing="12">
+        <SearchBar Placeholder="Search customers"
+                   Text="{Binding SearchText}"
+                   BackgroundColor="White" />
+
+        <HorizontalStackLayout Grid.Row="1" Spacing="8">
+            <Button Text="Import CSV" Command="{Binding ImportCsvCommand}" />
+            <Button Text="Export CSV" Command="{Binding ExportCsvCommand}" />
+            <Button Text="Add Customer" Clicked="AddCustomer_Clicked" />
+        </HorizontalStackLayout>
+
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding FilteredCustomers}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Customer">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem Text="Edit"
+                                           BackgroundColor="#1A3352"
+                                           Invoked="EditCustomer_Invoked"
+                                           CommandParameter="{Binding .}" />
+                                <SwipeItem Text="Delete"
+                                           BackgroundColor="#9B1C1C"
+                                           Invoked="DeleteCustomer_Invoked"
+                                           CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Border BackgroundColor="White"
+                                Stroke="#E5E7EB"
+                                StrokeThickness="1"
+                                Padding="14"
+                                Margin="0,0,0,10">
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                                <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" TextColor="#112033" />
+                                <Label Grid.Row="1" Text="{Binding ContactName}" TextColor="#112033" />
+                                <Label Grid.Row="2" Text="{Binding Email}" TextColor="#667085" />
+                                <Label Grid.Column="1"
+                                       Grid.RowSpan="3"
+                                       Text="›"
+                                       FontSize="28"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="#667085" />
+                            </Grid>
+                        </Border>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

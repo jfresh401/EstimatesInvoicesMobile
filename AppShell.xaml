@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    x:Class="FreshEstimate.Mobile.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:FreshEstimate.Mobile.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="Fresh Estimate and Invoicing">
+
+    <TabBar>
+        <ShellContent
+            Title="Dashboard"
+            ContentTemplate="{DataTemplate views:DashboardPage}"
+            Route="dashboard" />
+
+        <ShellContent
+            Title="Customers"
+            ContentTemplate="{DataTemplate views:CustomersPage}"
+            Route="customers" />
+
+        <ShellContent
+            Title="Documents"
+            ContentTemplate="{DataTemplate views:DocumentsPage}"
+            Route="documents" />
+
+        <ShellContent
+            Title="Branding"
+            ContentTemplate="{DataTemplate views:BrandingPage}"
+            Route="branding" />
+
+        <ShellContent 
+            Title="Templates"
+            ContentTemplate="{DataTemplate views:LineItemTemplatesPage}"
+            Route="templates" />
+    </TabBar>
+</Shell>
