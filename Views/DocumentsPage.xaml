@@ -51,7 +51,7 @@
                                            Invoked="EditDocument_Invoked"
                                            CommandParameter="{Binding .}" />
 
-                                <SwipeItem Text="PDF"
+                                <SwipeItem Text="Save PDF"
                                            BackgroundColor="#14532D"
                                            Invoked="ExportPdf_Invoked"
                                            CommandParameter="{Binding .}" />

@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using FreshEstimate.Mobile.Models;
 using FreshEstimate.Mobile.Services;
 using System.Collections.ObjectModel;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
 
 namespace FreshEstimate.Mobile.ViewModels;
 
@@ -129,15 +130,27 @@ public partial class DocumentsViewModel : ObservableObject
         try
         {
             var branding = await _repository.GetBrandingAsync();
+
+            // Replace this with your new Android-safe PDF generator later
             var bytes = _pdfExportService.GeneratePdf(document, branding);
 
-            using var stream = new MemoryStream(bytes);
-            var result = await FileSaver.Default.SaveAsync($"{document.Number}.pdf", stream);
+            var tempPath = Path.Combine(FileSystem.CacheDirectory, $"{document.Number}.pdf");
+            await File.WriteAllBytesAsync(tempPath, bytes);
 
-            if (!result.IsSuccessful)
-                throw result.Exception ?? new InvalidOperationException("Failed to save PDF.");
+            using var stream = File.OpenRead(tempPath);
+            var saveResult = await FileSaver.Default.SaveAsync($"{document.Number}.pdf", stream);
 
-            await Shell.Current.DisplayAlert("Export complete", $"Saved {document.Number}.pdf", "OK");
+            if (!saveResult.IsSuccessful)
+                throw saveResult.Exception ?? new InvalidOperationException("Failed to save PDF.");
+
+            await Shell.Current.DisplayAlert("Saved", $"Saved {document.Number}.pdf", "OK");
+
+            // Optional share after save:
+            // await Share.Default.RequestAsync(new ShareFileRequest
+            // {
+            //     Title = "Share PDF",
+            //     File = new ShareFile(tempPath)
+            // });
         }
         catch (Exception ex)
         {
